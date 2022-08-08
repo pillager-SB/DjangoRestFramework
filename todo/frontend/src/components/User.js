@@ -15,7 +15,6 @@ const UserItem = ({user}) => {
             <td>
                 {user.email}
             </td>
-
         </tr>
     )
 }
