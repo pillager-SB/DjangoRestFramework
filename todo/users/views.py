@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from rest_framework.viewsets import ModelViewSet
 from .models import TodoUser
-from .serializers import TodoUserModelSerializer
+from .serializers import TodoUserSerializer
 
 
-class TodoUserModelViewSet(ModelViewSet):
+class TodoUserViewSet(ModelViewSet):
     queryset = TodoUser.objects.all()
-    serializer_class = TodoUserModelSerializer
+    serializer_class = TodoUserSerializer
