@@ -2,7 +2,7 @@ from rest_framework.serializers import HyperlinkedModelSerializer, ModelSerializ
 from .models import TodoUser
 
 
-class TodoUserModelSerializer(ModelSerializer):
+class TodoUserSerializer(ModelSerializer):
     class Meta:
         model = TodoUser
         fields = [
