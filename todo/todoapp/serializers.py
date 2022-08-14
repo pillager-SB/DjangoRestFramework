@@ -1,14 +1,11 @@
+from rest_framework.relations import StringRelatedField
 from rest_framework.serializers import HyperlinkedModelSerializer, ModelSerializer, HyperlinkedRelatedField
 
 from .models import Project, ToDo
 
 
 class ProjectSerializer(ModelSerializer):
-    # Настройка сериализатора
-    # Настройка Foreign Key
-    # owner = HyperlinkedIdentityField(view_name='user-detail')
-    # Настройка Many to many
-    # users = HyperlinkedRelatedField(many=True, view_name='user-detail', read_only=True)
+    users = StringRelatedField(many=True)
 
     class Meta:
         model = Project
@@ -16,8 +13,9 @@ class ProjectSerializer(ModelSerializer):
 
 
 class ToDoSerializer(ModelSerializer):
-    # project = HyperlinkedIdentityField(view_name='project-detail')
-    # creator = HyperlinkedIdentityField(view_name='user-detail')
+    project = StringRelatedField()
+    creator = StringRelatedField()
+
     class Meta:
         model = ToDo
-        exclude = ('is_active')
+        fields = '__all__'
