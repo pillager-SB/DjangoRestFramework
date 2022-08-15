@@ -7,3 +7,4 @@ from .serializers import TodoUserSerializer
 class TodoUserViewSet(ModelViewSet):
     queryset = TodoUser.objects.all()
     serializer_class = TodoUserSerializer
+
