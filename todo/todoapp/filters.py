@@ -3,8 +3,6 @@ from .models import ToDo
 
 
 class ToDoFilter(filters.FilterSet):
-    name = filters.CharFilter(lookup_expr='contains')
-
     class Meta:
         model = ToDo
-        fields = ['project', ]
+        fields = ['project']

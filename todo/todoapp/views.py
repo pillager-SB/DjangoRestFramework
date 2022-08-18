@@ -2,6 +2,8 @@ from django.shortcuts import render
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.renderers import JSONRenderer, BrowsableAPIRenderer
 from rest_framework.viewsets import ModelViewSet
+
+from .filters import ToDoFilter
 from .serializers import ToDoSerializer, ProjectSerializer
 from .models import Project, ToDo
 
@@ -15,7 +17,13 @@ class ProjectViewSet(ModelViewSet):
     serializer_class = ProjectSerializer
     queryset = Project.objects.all()
     pagination_class = ProjectPagination
-    filter_class = ProjectFilter
+
+    def get_queryset(self):
+        queryset = Project.objects.all()
+        name = self.request.query_params.get('name', '')
+        if name:
+            queryset = queryset.filter(name__contains=name)
+        return queryset
 
 
 class ToDoPagination(LimitOffsetPagination):
@@ -26,3 +34,13 @@ class ToDoViewSet(ModelViewSet):
     serializer_class = ToDoSerializer
     queryset = ToDo.objects.all()
     pagination_class = ToDoPagination
+    filter_class = ToDoFilter
+
+    def destroy(self, request, *args, **kwargs):
+        try:
+            instance = self.get_object()
+            instance.is_active = False
+            instance.save()
+        except Exception as exc:
+            raise Warning('Destroy is not completed!!!') from exc
+
