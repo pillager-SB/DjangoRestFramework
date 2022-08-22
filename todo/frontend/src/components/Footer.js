@@ -1,6 +1,7 @@
 function Footer(){
     return(
         <div className="Site-footer">
+            <p></p>
             <b>TODO service</b>
             <p>2022 copyright. All rights reserved</p>
 

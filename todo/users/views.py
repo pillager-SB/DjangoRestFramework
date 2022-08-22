@@ -8,4 +8,4 @@ class TodoUserViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
                       mixins.UpdateModelMixin, viewsets.GenericViewSet):
     queryset = TodoUser.objects.all()
     serializer_class = TodoUserSerializer
-    filterset_fields = ['project']
+    # filterset_fields = ['project']
