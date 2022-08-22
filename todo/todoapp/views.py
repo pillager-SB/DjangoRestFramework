@@ -8,39 +8,39 @@ from .serializers import ToDoSerializer, ProjectSerializer
 from .models import Project, ToDo
 
 
-class ProjectPagination(LimitOffsetPagination):
-    default_limit = 10
+# class ProjectPagination(LimitOffsetPagination):
+#     default_limit = 10
 
 
 class ProjectViewSet(ModelViewSet):
     renderer_classes = [JSONRenderer, BrowsableAPIRenderer]
     serializer_class = ProjectSerializer
     queryset = Project.objects.all()
-    pagination_class = ProjectPagination
+    # pagination_class = ProjectPagination
 
-    def get_queryset(self):
-        queryset = Project.objects.all()
-        name = self.request.query_params.get('name', '')
-        if name:
-            queryset = queryset.filter(name__contains=name)
-        return queryset
+    # def get_queryset(self):
+    #     queryset = Project.objects.all()
+    #     name = self.request.query_params.get('name', '')
+    #     if name:
+    #         queryset = queryset.filter(name__contains=name)
+    #     return queryset
 
 
-class ToDoPagination(LimitOffsetPagination):
-    default_limit = 20
+# class ToDoPagination(LimitOffsetPagination):
+#     default_limit = 20
 
 
 class ToDoViewSet(ModelViewSet):
     serializer_class = ToDoSerializer
     queryset = ToDo.objects.all()
-    pagination_class = ToDoPagination
-    filter_class = ToDoFilter
+    # pagination_class = ToDoPagination
+    # filter_class = ToDoFilter
 
-    def destroy(self, request, *args, **kwargs):
-        try:
-            instance = self.get_object()
-            instance.is_active = False
-            instance.save()
-        except Exception as exc:
-            raise Warning('Destroy is not completed!!!') from exc
+    # def destroy(self, request, *args, **kwargs):
+    #     try:
+    #         instance = self.get_object()
+    #         instance.is_active = False
+    #         instance.save()
+    #     except Exception as exc:
+    #         raise Warning('Destroy is not completed!!!') from exc
 
