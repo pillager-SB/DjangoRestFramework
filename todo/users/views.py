@@ -4,7 +4,7 @@ from .serializers import TodoUserSerializer
 from .models import TodoUser
 
 
-class TodoUserViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
+class TodoUserViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,mixins.CreateModelMixin,
                       mixins.UpdateModelMixin, viewsets.GenericViewSet):
     queryset = TodoUser.objects.all()
     serializer_class = TodoUserSerializer
