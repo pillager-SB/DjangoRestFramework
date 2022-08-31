@@ -1,12 +1,14 @@
 import json
 from django.test import TestCase
 from rest_framework import status
-from rest_framework.test import APIRequestFactory, force_authenticate, APIClient, APISimpleTestCase, APITestCase
+from rest_framework.test import APIRequestFactory, force_authenticate, APIClient, APISimpleTestCase, APITestCase, \
+    CoreAPIClient
 from mixer.backend.django import mixer
 from users.models import TodoUser
 from .views import ToDoViewSet, ProjectViewSet
 from users.views import TodoUserViewSet
 from .models import Project, ToDo
+from requests.auth import HTTPBasicAuth
 
 
 # class TestTodoUserViewSet(TestCase):
@@ -65,43 +67,60 @@ from .models import Project, ToDo
 #         client.logout()
 #
 #     def tearDown(self):
-#         pass
+#         ...
 
 
-class TestProject(APITestCase):
+# class TestCaseProject(APITestCase):
+#     def setUp(self):
+#         self.url = '/api/projects/'
+#         self.user = TodoUser.objects.create(username='user3', first_name='Lala', last_name='Sasa',
+#                                             email='user3@user.com')
+#         self.format = 'json'
+#         self.admin = TodoUser.objects.create_superuser('adm', 'adm@usr.com', 'adm_0123')
+#
+#     def test_case_update_admin(self):
+#         self.client.login(username='adm', password='adm_0123')
+#         self.t_project = Project.objects.create(name='TestProject',
+#                                                 repo='https://github.com/pillager-SB/DjangoRestFramework/pull/7')
+#         self.t_project.users.add(self.user)
+#
+#         response = self.client.put(f'{self.url}{self.t_project.id}/', {
+#             'name': 'TestProject_02', 'repo': self.t_project.repo, 'users': (self.admin.id,)})
+#         self.assertEqual(response.status_code, status.HTTP_200_OK)
+#         self.t_project.refresh_from_db()
+#         self.assertEqual(self.t_project.name, 'TestProject_02')
+#         self.client.logout()
+#
+#     def test_mixer(self):
+#         self.user, self.user1, self.user2 = [mixer.blend(TodoUser) for i in 'III']
+#         self.project_01 = mixer.blend(Project)
+#         self.project_01.users.add(self.user, self.user1)
+#         self.client.login(username='adm', password='adm_0123')
+#         response = self.client.put(f'{self.url}{self.project_01.id}/', {
+#             'name': 'TestProject_02', 'repo': 'https://github.com/Nikolos123/homework/tree/master',
+#             'users': (self.user2.id,)})
+#         self.assertEqual(response.status_code, status.HTTP_200_OK)
+#         self.project_01.refresh_from_db()
+#         self.assertEqual(self.project_01.name, 'TestProject_02')
+#         self.assertEqual(self.project_01.repo, 'https://github.com/Nikolos123/homework/tree/master')
+#         self.client.logout()
+#
+#     def tearDown(self):
+#         ...
+#
+
+class TestCoreUser(CoreAPIClient):
     def setUp(self):
-        self.url = '/api/projects/'
-        self.user = TodoUser.objects.create(username='user3', first_name='Lala', last_name='Sasa',
-                                            email='user3@user.com')
-        self.format = 'json'
-        self.admin = TodoUser.objects.create_superuser('adm', 'adm@usr.com', 'adm_0123')
+        ...
 
-    def test_case_update_admin(self):
-        self.client.login(username='adm', password='adm_0123')
-        self.t_project = Project.objects.create(name='TestProject',
-                                                repo='https://github.com/pillager-SB/DjangoRestFramework/pull/7')
-        self.t_project.users.add(self.user)
+    def test_core_get_user_list(self):
+        client = CoreAPIClient()
+        schema = client.get('http://localhost:8000/schema/')
+        client.session.auth = HTTPBasicAuth('admin', 'admin')
+        params = {'username': 'user3', 'first_name': 'Lala', 'last_name': 'Sasa',
+                  'email': 'user3@user.com'}
+        client.action(schema,['users', 'create'], params)
 
-        response = self.client.put(f'{self.url}{self.t_project.id}/', {
-            'name': 'TestProject_02', 'repo': self.t_project.repo, 'users': (self.admin.id,)})
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.t_project.refresh_from_db()
-        self.assertEqual(self.t_project.name, 'TestProject_02')
-        self.client.logout()
-
-    def test_mixer(self):
-        self.user, self.user1, self.user2 = [mixer.blend(TodoUser) for i in 'III']
-        self.project_01 = mixer.blend(Project)
-        self.project_01.users.add(self.user, self.user1)
-        self.client.login(username='adm', password='adm_0123')
-        response = self.client.put(f'{self.url}{self.project_01.id}/', {
-            'name': 'TestProject_02', 'repo': 'https://github.com/Nikolos123/homework/tree/master',
-            'users': (self.user2.id,)})
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.project_01.refresh_from_db()
-        self.assertEqual(self.project_01.name, 'TestProject_02')
-        self.assertEqual(self.project_01.repo, 'https://github.com/Nikolos123/homework/tree/master')
-        self.client.logout()
 
     def tearDown(self):
         ...
