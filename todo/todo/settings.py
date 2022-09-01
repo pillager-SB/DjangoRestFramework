@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django_filters',
     'rest_framework.authtoken',
     'coreapi',
+    'drf_yasg',
 
     'users',
     'todoapp',
