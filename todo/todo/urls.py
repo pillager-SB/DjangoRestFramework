@@ -17,9 +17,10 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework.authtoken import views
 from rest_framework.routers import DefaultRouter
-
+from rest_framework.schemas import get_schema_view
 from todoapp.views import ProjectViewSet, ToDoViewSet
 from users.views import TodoUserViewSet
+schema_view = get_schema_view(title='Pastebin API')
 
 router = DefaultRouter()
 router.register('users', TodoUserViewSet)
@@ -31,5 +32,6 @@ urlpatterns = [
     path('api/', include(router.urls)),
     path('api-auth/', include('rest_framework.urls')),
     path('api-token-auth/', views.obtain_auth_token),
+    path('schema/', schema_view),
 
 ]
