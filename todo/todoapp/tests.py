@@ -115,7 +115,7 @@ class TestCaseProject(APITestCase):
 #
 #     def test_core_get_user_list(self):
 #         client = CoreAPIClient()
-#         schema = client.get('http://localhost:8000/schema/')
+#         schema = client.get('http://127.0.0.1:8000/swagger.json/')
 #         client.session.auth = HTTPBasicAuth('admin', 'admin')
 #         params = {'username': 'user3', 'first_name': 'Lala', 'last_name': 'Sasa',
 #                   'email': 'user3@user.com'}
