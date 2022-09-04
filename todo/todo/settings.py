@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'coreapi',
     'drf_yasg',
+    'graphene_django',
 
     'users',
     'todoapp',
@@ -162,4 +163,7 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.QueryParameterVersioning',
 
+}
+GRAPHENE = {
+    "SCHEMA": "todo.schema.schema",
 }
