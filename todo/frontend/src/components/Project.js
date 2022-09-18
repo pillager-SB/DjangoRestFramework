@@ -18,6 +18,7 @@ const ProjectItem = ({project, delete_project}) => {
 }
 
 const ProjectList = ({projects, delete_project}) => {
+
     const [value, setValue] = useState('')
     const filteredProjects = projects.filter(project => {
         return project.name.toLowerCase().includes(value.toLowerCase())
