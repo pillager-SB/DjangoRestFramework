@@ -31,6 +31,7 @@ class ProjectViewSet(ModelViewSet):
 
 
 class ToDoViewSet(ModelViewSet):
+    renderer_classes = [JSONRenderer, BrowsableAPIRenderer]
     serializer_class = ToDoSerializer
     queryset = ToDo.objects.all()
 
